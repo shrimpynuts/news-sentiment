@@ -6,7 +6,9 @@ import re
 from datetime import datetime
 from pandas import to_datetime
 
-# Functions to get time-series data for news articles using NYT's API for a given query.
+# Functions to get time-series data for news articles using NYT's API for a 
+# given query.
+
 
 def get_nyt_article(url):
     """
@@ -23,7 +25,7 @@ def get_nyt_article(url):
     soup = BeautifulSoup(r.content, "html.parser")
     title = soup.title.get_text()
     paragraphs = "" 
-    para = soup.findAll("p", {"class":"css-1ygdjhk evys1bk0"})
+    para = soup.findAll("p", {"class": "css-1ygdjhk evys1bk0"})
     for p in para:
         paragraphs += p.get_text()
 
@@ -33,8 +35,8 @@ def get_nyt_article(url):
 
 def get_nyt_data(max_pages, api_key, query, pickle_bool, pickle_file_name):
     """ 
-    Takes max number of pages (each page is 10 articles) to query, the api_key for NYT API,
-    and the query term.
+    Takes max number of pages (each page is 10 articles) to query, the api_key 
+    for NYT API, and the query term.
     Returns list of tuples ()
     Optional: (boolean) pickle_bool, (string) pickle_file_name.
     If pickle, pickles list of documents to file named pickle_file_name.
@@ -47,7 +49,7 @@ def get_nyt_data(max_pages, api_key, query, pickle_bool, pickle_file_name):
         'https://api.nytimes.com/svc/search/v2/articlesearch.json',
         params={
             'q': query,
-            'api-key' : api_key},
+            'api-key': api_key},
     )
     rj = resp.json()
     # Response.meta.hits gives us the number of pages of results.
@@ -62,8 +64,8 @@ def get_nyt_data(max_pages, api_key, query, pickle_bool, pickle_file_name):
         'https://api.nytimes.com/svc/search/v2/articlesearch.json',
         params={
             'q': query,
-            'api-key' : api_key,
-            'page' : c
+            'api-key': api_key,
+            'page': c
             },
         )
         docs.extend([(x['web_url'], x['pub_date']) for x in rj["response"]["docs"]])
@@ -77,7 +79,7 @@ def get_nyt_data(max_pages, api_key, query, pickle_bool, pickle_file_name):
 
     print("Number of docs returned from NYT:", len(docs))
     b = len(docs)
-    print("Removing {} duplicates:".format(b - len(set(docs))))
+    print("Removing {} duplicates.".format(b - len(set(docs))))
     docs = list(set(docs))
     print("Extracting text from each url...")
     # List of (url, datetime, list of words)
@@ -92,6 +94,7 @@ def get_nyt_data(max_pages, api_key, query, pickle_bool, pickle_file_name):
     return docs
 
 
-api_key = "AoA9eRNg2H99U2r61TbmsEoiWxVABIjD"
-query = "Google"
-print(get_nyt_data(0, api_key, query, True, "goodstuff.txt"))
+# HOW TO USE:
+# api_key = "AoA9eRNg2H99U2r61TbmsEoiWxVABIjD"
+# query = "Google"
+# get_nyt_data(3, api_key, query, True, "goodstuff.txt")
