@@ -68,6 +68,7 @@ six==1.11.0
 sklearn==0.0
 terminado==0.8.1
 testpath==0.4.2
+tifffile==2019.3.18
 tornado==5.1.1
 traitlets==4.3.2
 typed-ast==1.1.0
@@ -78,3 +79,4 @@ wcwidth==0.1.7
 webencodings==0.5.1
 widgetsnbextension==3.4.2
 wrapt==1.10.11
+xlrd==1.2.0
