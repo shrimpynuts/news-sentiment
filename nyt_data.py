@@ -3,11 +3,17 @@ import requests
 from bs4 import BeautifulSoup
 import pickle
 import re
-from datetime import datetime
 from pandas import to_datetime
+from datetime import timedelta, date, datetime
+import numpy as np
 
 # Functions to get time-series data for news articles using NYT's API for a 
 # given query.
+
+
+def daterange(start_date, end_date):
+    for n in range(int ((end_date - start_date).days))[::10]:
+        yield start_date + timedelta(n)
 
 
 def get_nyt_article(url):
@@ -22,15 +28,15 @@ def get_nyt_article(url):
     if r.status_code >= 400 and r.status_code < 500:
         print("Bad request! Status code:", r.status_code, "Returning...")
         return None, None, None, None
-    soup = BeautifulSoup(r.content, "html.parser")
-    title = soup.title.get_text()
+    # soup = BeautifulSoup(r.content, "html.parser")
+    # title = soup.title.get_text()
     paragraphs = "" 
     para = soup.findAll("p", {"class": "css-1ygdjhk evys1bk0"})
     for p in para:
         paragraphs += p.get_text()
 
     words = re.sub("[^\w]", " ", paragraphs).split()
-    return (title, url, words)
+    return (url, words)
 
 
 def get_nyt_data(max_pages, api_key, query, pickle_bool, pickle_file_name):
@@ -58,18 +64,38 @@ def get_nyt_data(max_pages, api_key, query, pickle_bool, pickle_file_name):
     docs.extend([(x['web_url'], x['pub_date']) for x in rj["response"]["docs"]])
     c = 1
     req_start = time.time()
+
+    # weeks = min(hits, max_pages)
+    # days_ago = weeks * 7
+    # today = datetime.today()
+    # start_date = (today - timedelta(days_ago)).date()
+    # end_date = today.date()
+    # print("Getting data between %s, and %s." % (start_date, end_date))
+    # dates = list(daterange(start_date, end_date))
+    # dates.append(end_date)
+    # print(np.array(dates))
+
     # Loop for max_pages, unless there are less hits than max_pages.
     while c <= min(hits, max_pages):
+
+        # begin = dates[c].strftime("%Y") + dates[c].strftime("%m") + dates[c].strftime("%d")
+        # end = dates[c + 1].strftime("%Y") + dates[c + 1].strftime("%m") + dates[c + 1].strftime("%d")
+
         resp = requests.get(
         'https://api.nytimes.com/svc/search/v2/articlesearch.json',
         params={
             'q': query,
             'api-key': api_key,
-            'page': c
+            'page': c,
+            # 'begin_date': begin,
+            # 'end_date': end,
+            'sort': 'newest'
             },
         )
-        docs.extend([(x['web_url'], x['pub_date']) for x in rj["response"]["docs"]])
-        print("Requesting page #{} of {}.".format(c, min(hits, max_pages)))
+        # print(resp.url)
+        docs.extend([(x['web_url'], x['pub_date']) for x in resp.json()["response"]["docs"]])
+        # print("Requesting page #{} of {}.".format(c, min(hits, max_pages)))
+        print([x['web_url'] for x in resp.json()["response"]["docs"]][0])
         c += 1
         # Sleep between requests to avoid hitting limit.
         time.sleep(6)
@@ -83,7 +109,7 @@ def get_nyt_data(max_pages, api_key, query, pickle_bool, pickle_file_name):
     docs = list(set(docs))
     print("Extracting text from each url...")
     # List of (url, datetime, list of words)
-    docs = [(d[0], to_datetime(d[1]), get_nyt_article(d[0])[2]) for d in docs]
+    docs = [(d[0], to_datetime(d[1]), get_nyt_article(d[0])[1]) for d in docs]
     print("Finished extracting text from urls in {}".format(time.time() - req_finish))
 
     # If user requests pickle
