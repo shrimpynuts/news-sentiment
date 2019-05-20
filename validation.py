@@ -24,10 +24,10 @@ def get_rule_sentiment(words):
     return (pos - neg)
 
 
-        
-api_key = "AoA9eRNg2H99U2r61TbmsEoiWxVABIjD"
-query = "Google"
-get_nyt_data(200, api_key, query, True, "1200-pages-google.txt")
+if __name__ == '__main__':
+    api_key = "AoA9eRNg2H99U2r61TbmsEoiWxVABIjD"
+    query = "Google"
+    get_nyt_data(1200, api_key, query, True, "1200-pages-google.pkl")
 
 # with open('goodstuff.txt', 'rb') as fp:
 #     data = pickle.load(fp)

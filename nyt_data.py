@@ -28,10 +28,12 @@ def get_nyt_article(url):
     if r.status_code >= 400 and r.status_code < 500:
         print("Bad request! Status code:", r.status_code, "Returning...")
         return None, None, None, None
-    # soup = BeautifulSoup(r.content, "html.parser")
-    # title = soup.title.get_text()
+    soup = BeautifulSoup(r.content, "html.parser")
+    title = soup.title.get_text()
     paragraphs = "" 
-    para = soup.findAll("p", {"class": "css-1ygdjhk evys1bk0"})
+    
+    #Notice that the class will need to be updated every once in awhile as it changes.
+    para = soup.findAll("p", {"class": "css-18icg9x evys1bk0"})
     for p in para:
         paragraphs += p.get_text()
 
