@@ -13,19 +13,24 @@ def get_stock_data(stock_symbol, api_key):
         "function": "TIME_SERIES_DAILY",
         "datatype": "json",
         "apikey": "94Z49Z19XNL1GGGP",
-        "outputsize": "full" #Full gives us more data than before
+        "outputsize": "full"  # Full gives us more data than before
         }
     data['symbol'] = stock_symbol
     response = requests.get(API_URL, data)
 
     raw = response.json()["Time Series (Daily)"]
     st = pd.DataFrame.from_dict(raw, orient="index").reset_index(0)\
-        .rename(columns={"index": "ds"})
-    st.head()
+        .rename(columns={
+            "index": "ds",
+            "1. open": "open",
+            "2. high": "high",
+            "3. low": "low",
+            "4. close": "close",
+            "5. volume": "volume"})
 
     st['date'] = pd.to_datetime(st.ds)
-    labels = ['1. open', '2. high', '3. low', '4. close', '5. volume']
-    st[labels] = st[labels].apply(pd.to_numeric)
+    # labels = ['1. open', '2. high', '3. low', '4. close', '5. volume']
+    # st[labels] = st[labels].apply(pd.to_numeric)
     st.index = st['date']
     st.drop(columns=['date'], inplace=True)
     return st
