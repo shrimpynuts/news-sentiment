@@ -13,8 +13,9 @@ def get_stock_data(stock_symbol, api_key):
         "function": "TIME_SERIES_DAILY",
         "datatype": "json",
         "apikey": "94Z49Z19XNL1GGGP",
+        "outputsize": "full" #Full gives us more data than before
         }
-    data['symbol'] = "GOOG"
+    data['symbol'] = stock_symbol
     response = requests.get(API_URL, data)
 
     raw = response.json()["Time Series (Daily)"]
