@@ -7,11 +7,12 @@ from nyt_data import get_nyt_data
 
 
 # Retrieve positive/negative words
-with open('positive_words.txt', 'rb') as fp:
+with open('../positive_words.txt', 'rb') as fp:
     pos_words = pickle.load(fp)
 
-with open('negative_words.txt', 'rb') as fp:
+with open('../negative_words.txt', 'rb') as fp:
     neg_words = pickle.load(fp)
+
 
 # Function to actually calculate sentiment based on list of pos/neg words.
 def get_rule_sentiment(words):
@@ -24,10 +25,10 @@ def get_rule_sentiment(words):
     return (pos - neg)
 
 
-if __name__ == '__main__':
-    api_key = "AoA9eRNg2H99U2r61TbmsEoiWxVABIjD"
-    query = "Google"
-    get_nyt_data(1200, api_key, query, True, "1200-pages-google.pkl")
+# if __name__ == '__main__':
+#     api_key = "AoA9eRNg2H99U2r61TbmsEoiWxVABIjD"
+#     query = "Google"
+#     get_nyt_data(1200, api_key, query, True, "1200-pages-google.pkl")
 
 # with open('goodstuff.txt', 'rb') as fp:
 #     data = pickle.load(fp)
