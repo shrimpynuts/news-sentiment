@@ -2,8 +2,8 @@
 Jonathan Cai, William Su
 
 ## Visualizations
-<img src="./img/google1.png" height="100%" width= "50%" /> 
-<img src="./img/apple1.png"  height="100%" width= "50%" />
+<img src="./img/google1.png" height="100%" width= "80%" /> 
+<img src="./img/apple1.png"  height="100%" width= "80%" />
 
 ## Motivation
 
