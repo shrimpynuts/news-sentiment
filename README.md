@@ -1,7 +1,9 @@
 # Predicting Stock Through News Articles 
 Jonathan Cai, William Su
 
-<img src="./img/google1.png" height="100%" width= "100%" /> <img src="./img/apple1.png"  height="100%" width= "100%" />
+## Visualizations
+<img src="./img/google1.png" height="100%" width= "50%" /> 
+<img src="./img/apple1.png"  height="100%" width= "50%" />
 
 ## Motivation
 
@@ -55,5 +57,6 @@ We tried to use the following techniques to generate some sentiment score for ea
 ## Results
 
 ## Considerations
+<!-- Causation vs Correlation -->
 
-Not all of the articles retrieved actually relate to the company queried.
+<!-- Not all of the articles retrieved actually relate to the company queried. -->

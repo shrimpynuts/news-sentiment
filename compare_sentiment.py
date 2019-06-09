@@ -127,6 +127,9 @@ def collapse_articles(data_source = "./data/apple_data.pkl", stockName = "GOOG",
     #Append delta
     final_df = pd.merge(final_df, deltas, on = 'time', how = 'inner').drop(columns = 'dayofweek')
     
+    #Handle errors
+    final_df = final_df[final_df['liststring']!=0] 
+    
     return final_df
 
 # Function to plot and compare the data.
