@@ -1,9 +1,7 @@
 # Predicting Stock Through News Articles 
 Jonathan Cai, William Su
 
-<img src="./img/google1.png" height="25%" width= "25%" /> 
-<img src="./img/apple1.png"  height="25%" width= "25%" />
-
+<img src="./img/google1.png" height="100%" width= "100%" /> <img src="./img/apple1.png"  height="100%" width= "100%" />
 
 ## Motivation
 
