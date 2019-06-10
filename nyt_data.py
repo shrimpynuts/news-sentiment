@@ -67,7 +67,7 @@ def process_article(article):
             return((article[0], to_datetime(article[1]), x))
 
 
-def get_nyt_data(max_pages, api_key, query, both_keys):
+def get_nyt_data(max_pages, api_key, query, both_keys, pkl):
     """ 
     Takes max number of pages (each page is 10 articles) to query, the api_key 
     for NYT API, and the query term.
@@ -78,16 +78,16 @@ def get_nyt_data(max_pages, api_key, query, both_keys):
     pickle_file_name = query + "-data.pkl"
     folder = "data/"
     f = folder + pickle_file_name
-    f_url = f + "-urls.pkl"
+    f_url = folder + query + "-urls.pkl"
     req_start = time.time()
 
     if not os.path.isfile(f_url):
         print("Requesting NYT API for max {} pages for query, \"{}\".".format(max_pages, query))
         if both_keys:
-            wait_time = 4
+            wait_time = 2
             keys = api_keys[1] + api_keys[0]
         else:
-            wait_time = 6
+            wait_time = 4
             if api_key == 1:
                 keys = api_keys[1]
             else:
@@ -130,9 +130,9 @@ def get_nyt_data(max_pages, api_key, query, both_keys):
             count = (count + 1) % len(keys)
             # print(resp.url)
             if "response" in resp.json():
-                docs.extend([(x['web_url'], x['pub_date']) for x in resp.json()["response"]["docs"]])
-            print("Requesting page #{} of {}.".format(c, min(hits, max_pages)))
-            print([x['web_url'] for x in resp.json()["response"]["docs"]][0])
+                r = [(x['web_url'], x['pub_date']) for x in resp.json()["response"]["docs"]]
+                docs.extend(r)
+            print("Requesting page #{} of {}.".format(c, min(hits, max_pages)), r[0])
             c += 1
             # Sleep between requests to avoid hitting limit.
             time.sleep(wait_time)
@@ -160,20 +160,20 @@ def get_nyt_data(max_pages, api_key, query, both_keys):
     with Pool(100) as p:
         result = p.map(process_article, docs)
 
-    print("Result: ", result[0])
-
     # docs = [(d[0], to_datetime(d[1]), get_nyt_article(d[0])[1]) for d in docs]
     print("Finished extracting text from urls in {}".format(time.time() - req_finish))
 
     # If user requests pickle
-    with open(f, 'wb') as fp:
-        pickle.dump(result, fp)
-
-    return docs
+    if pkl:
+        with open(f, 'wb') as fp:
+            pickle.dump(result, fp)
+        return None
+    else:
+        return docs
 
 
 # HOW TO USE:
 # get_nyt_data(300, 1, query, True, True, "apple-nyt.pkl")
 if __name__ == "__main__":
     query = input("Enter your query: ")
-    get_nyt_data(180, 0, query, True, True, query + "-data.pkl")
+    get_nyt_data(180, 0, query, True, True, True)

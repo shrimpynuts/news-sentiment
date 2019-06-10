@@ -48,15 +48,22 @@ We tried to use the following techniques to generate some sentiment score for ea
 #### Building our own lexicon
 
 
-#### TextBlob
+[Textblob](https://textblob.readthedocs.io/en/dev/quickstart.html) is another simple interface which performs sentiment analysis, providing both a polarity (-1 to 1) and a subjectivity score (0 to 1). Behind the scenes, Textblob holds a lexicon in XML format, containing entries on thousands upon thousands of words. It works by averaging the polarity scores among all words of the text being analyzed, and accounts for negation and modifier words too. All in all, Textblob doesn't appear to be too sophisticated a tool, and you can see the results below to see for yourself how it performed.
 
+#### Building our own lexicon, rule-based algorithm
 
+On top of these previous two lexicon-based tools, we also decided to try and build out our own lexicon of words. Admittedly, a lot of the hard work was already performed by others, as we used dictionaries from [Loughran and McDonald Sentiment Word Lists](https://sraf.nd.edu/textual-analysis/resources/#LM%20Sentiment%20Word%20Lists) which contain thousands of pre-labeled positive and negative words. Also, we used data from the [MPQA Subjectivity Lexicon](http://mpqa.cs.pitt.edu/lexicons/subj_lexicon/) provided by OpinionFinder.
+We simply combined words from each of these sources, and selected the first 2500 words from both positive and negative words. We defined our rule-based algorithm to simply count the occurence of the total positive and negative words, and subtract to come up with a final sentiment score. As simple as this sounds, it performed ??????.
 
 #### Neural Network
+
+#### Google Cloud Platform Vision API
 
 ## Results
 
 ## Considerations
 <!-- Causation vs Correlation -->
 
-<!-- Not all of the articles retrieved actually relate to the company queried. -->
+Not all of the articles retrieved actually relate to the company queried.
+
+Discussion thus far has been about correlation, but can we also infer something about the causative relationship between news articles and company stock?
