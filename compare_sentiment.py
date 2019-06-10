@@ -72,7 +72,7 @@ def collapse_articles(data_source = "./data/apple_data.pkl", stockName = "GOOG",
     #Open and load the data
     with open(data_source, "rb") as fp:   
         raw = pickle.load(fp)
-    
+        raw = [article for article in raw if article is not None]
     #------------------ Prepare Initial DataFrame ---------------
     #Prepare DataFrame.
     df = pd.DataFrame(raw, columns = ["link", "time", "words"])
@@ -129,7 +129,7 @@ def collapse_articles(data_source = "./data/apple_data.pkl", stockName = "GOOG",
     
     #Handle errors
     final_df = final_df[final_df['liststring']!=0] 
-    
+
     return final_df
 
 # Function to plot and compare the data.
