@@ -2,8 +2,8 @@
 Jonathan Cai, William Su
 
 ## Visualizations
-<img src="./img/google1.png" height="100%" width= "80%" /> 
-<img src="./img/apple1.png"  height="100%" width= "80%" />
+<img src="./img/google1.png" height="100%" width= "100%" /> 
+<img src="./img/apple1.png"  height="100%" width= "100%" />
 
 ## Motivation
 
@@ -56,6 +56,17 @@ On top of these previous two lexicon-based tools, we also decided to try and bui
 We simply combined words from each of these sources, and selected the first 2500 words from both positive and negative words. We defined our rule-based algorithm to simply count the occurence of the total positive and negative words, and subtract to come up with a final sentiment score. As simple as this sounds, it performed ??????.
 
 #### Neural Network
+
+Another solution we explored is the extent to which a neural network can do sentiment analysis. 
+Because there are so many words and variability from article to article, the more text our model can learn from the better. Therefore, as opposed to our other techniques where we analyzed each company's sentiment individually, we aggregated all companies' data together, in an attempt to train a single sophisticated model that may be generalizable to all news data.
+
+However, simply aggregating all the text isn't enough. To fit the inputs of a neural network (which should be numeric), we had to re-transform our data even more. To do so, we used TensorFlow's built-in Tokenizer() function which translates text into sequences of integers or so-called word vectors. These word vectors then become the Input/Embedding Layer of our network. As inspired by this [Movie Review Sentiment Analysis Probelm](https://towardsdatascience.com/machine-learning-word-embedding-sentiment-classification-using-keras-b83c28087456), the architecture of our model looks something like this: 
+
+<img src="./img/network_arch.png"  height="100%" width= "100%" />
+
+In our initial tries of building the model, we discovered that the model was overfitting to our training data very quickly and predicting our test data with terrible accuracy. We suspect that a potential reason for this is that there are simply too many features (words) that the model has to learn from. Therefore, after almost every neural layer, we also used a Dropout Layer to prevent this. We also played around with how we built our word vectors to reduce dimensionalitiy in our input data.
+
+Also, to simplify the complexity of the problem for our initial model, we set a "baby" step: instead of directly predicting the sentiment (stock prices), all we need is to predict whether the stock increases or decreases. Once we believe our model performs relatively well on this binary-classification problem, we then tried to build a more sophisticated regression model to try to predict the actual prices.
 
 #### Google Cloud Platform Vision API
 
