@@ -5,6 +5,30 @@ import pandas as pd
 import pickle
 import requests
 import lexicon 
+from textblob import TextBlob
+
+from google.cloud import language
+from google.cloud.language import enums
+from google.cloud.language import types
+from google.oauth2 import service_account
+
+# Establish GCP credentials
+credentials = service_account.Credentials.from_service_account_file(
+    './gcp-cred.json')
+# Instantiates a GCP client
+client = language.LanguageServiceClient(credentials=credentials)
+
+def get_gcp_sentiment(words):
+    """
+    Words is a single string of words.
+    """
+    document = types.Document(
+        content=words,
+        type=enums.Document.Type.PLAIN_TEXT)
+    # Detects the sentiment of the text
+    sentiment = client.analyze_sentiment(document=document).document_sentiment
+    return sentiment.score
+
 
 # Function to actually calculate sentiment based on list of pos/neg words.
 def get_rule_sentiment(words):
@@ -34,15 +58,53 @@ def get_nltk_sentiment(words):
     return (cc['compound'])
 
 
-def get_sentiments(data):
+def get_textblob_sentiment(words):
     """
+    Takes in a single string, words.
+    """
+    wiki = TextBlob(words)
+    return wiki.sentiment.polarity
+
+
+def get_technique_ordering(techniques):
+    """
+    Gets correct ordering for columns in techniques ("nltk", "rule", "net", "gcp", "textblob").
+    Stock will always come first, however.
+    """
+    res = {0 : "stock"}
+    count = 1
+    if "rule" in techniques:
+        res[count] = "rule"
+        count += 1
+    if "nltk" in techniques:
+        res[count] = "nltk"
+        count += 1
+    if "textblob" in techniques:
+        res[count] = "textblob"
+        count += 1
+    if "gcp" in techniques:
+        res[count] = "gcp"
+        count += 1
+    return res
+
+def get_sentiments(data, techniques):
+    """
+    data - output from collapse_articles
+    techinques - list of strings. Each string must be one of: ("nltk", "rule", "net", "gcp", "textblob")
+    
     Function that gets score for text using both our own rule based bag-of-words and NLTK's model.
     The returned value should be of a dataframe of columns:
         date, liststring (all the words), delta(change in stock), rule_score, nltk_compund
     """
-#     data['rule_score'] = data['liststring'].map(lambda x : lexicon.get_rule_sentiment(x.lower().split(',')))
-    data['rule_score'] = data['liststring'].map(lambda x : get_rule_sentiment(x.lower().split(',')))
-    data['nltk_compound'] = data['liststring'].map(lambda x : get_nltk_sentiment(x.replace(',', ' ')))
+    if "rule" in techniques:
+        data['rule'] = data['liststring'].map(lambda x : get_rule_sentiment(x.lower().split(',')))
+    if "nltk" in techniques:
+        data['nltk'] = data['liststring'].map(lambda x : get_nltk_sentiment(x.replace(',', ' ')))
+    if "textblob" in techniques:
+        data['textblob'] = data['liststring'].map(lambda x : get_textblob_sentiment(x.replace(',', ' ')))
+    if "gcp" in techniques:
+        data['gcp'] = data['liststring'].map(lambda x : get_gcp_sentiment(x.replace(',', ' ')))
+    
     return data
 
 def get_stock(stock_symbol, api_key):
@@ -152,7 +214,7 @@ def collapse_articles(data_source = "./data/apple_data.pkl", stockName = "GOOG",
     return final_df
 
 # Function to plot and compare the data.
-def plot_data(data, normFunc, start, end, nltk):
+def plot_data(data, normFunc, start, end, techniques):
     """
     Plot the data as specified by the normalizer function.
     Params:
@@ -172,11 +234,11 @@ def plot_data(data, normFunc, start, end, nltk):
     
     X = data.drop(columns = "liststring")    
     x_scale = pd.DataFrame(scale.fit_transform(X.values))
-    x_scale.rename(columns = {0: "stock", 1: "rule_score", 2: 'nltk'}, inplace= True)
+    x_scale.rename(columns = get_technique_ordering(techniques), inplace=True)
     
-    #Drop nltk
-    if (not nltk):
-        x_scale.drop(columns = 'nltk', inplace = True)
+#     #Drop nltk
+#     if (not nltk):
+#         x_scale.drop(columns = 'nltk', inplace = True)
     
     #Set time index back
     x_scale['date'] = X.index
