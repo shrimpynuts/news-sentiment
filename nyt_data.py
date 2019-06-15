@@ -13,14 +13,17 @@ from multiprocessing import Pool
 # given query.
 
 api_keys = [
+    # These are Will's keys (each has 10 req/min)
     ["exsr5Zr1e6ads9vR36KJxheARS9zfGyi",
     "5RM6ynn4RCoodyBYrzGM0y2geDGlPaGp",
-    "7qreSl8ykg6AdgY84XI4JD5wNETvAxma"
+    "7qreSl8ykg6AdgY84XI4JD5wNETvAxma",
+    "Sjh4AIsDakKzlqIO98ML0QyUQxu97unv"
     ],
+    # These are Johnnys's keys (each has 30 req/min)
     [
     "wDGXMKr2bFc8CAObmhtaSwT86NaChbYh",
     "AoA9eRNg2H99U2r61TbmsEoiWxVABIjD",
-    "Sjh4AIsDakKzlqIO98ML0QyUQxu97unv"
+    "bFM0M3geSQHrjSTFaoXGFNDzb0U0Mlgl"
     ]
 ]
 
@@ -69,13 +72,18 @@ def process_article(article):
 
 def get_nyt_data(max_pages, api_key, query, both_keys, pkl):
     """ 
+    Max_pages - number of pages to search for articles (10 articles per page)
+    Both_keys - True if want to use both Will + Johnny's keys
+    Api_key - 1 or 0. 1 to use Johnny's, 0 to use Will's. Doesn't matter if both_keys = True
+    Pkl - True to pickle, False to just return the data.
+    
     Takes max number of pages (each page is 10 articles) to query, the api_key 
     for NYT API, and the query term.
     Returns list of tuples ()
     Optional: (boolean) pickle_bool, (string) pickle_file_name.
     If pickle, pickles list of documents to file named pickle_file_name.
     """
-    pickle_file_name = query + "-data.pkl"
+    pickle_file_name = query + "-pages=" + str(max_pages) + "-data.pkl"
     folder = "data/"
     f = folder + pickle_file_name
     f_url = folder + query + "-urls.pkl"
@@ -87,13 +95,15 @@ def get_nyt_data(max_pages, api_key, query, both_keys, pkl):
             wait_time = 2
             keys = api_keys[1] + api_keys[0]
         else:
-            wait_time = 4
             if api_key == 1:
+                wait_time = 1
                 keys = api_keys[1]
             else:
+                wait_time = 3
                 keys = api_keys[0]
 
         print("Keys being used:", keys)
+        print("Wait time:", wait_time)
         count = 0
         # Store all doc/publish dates as list of tuples.
         docs = []
