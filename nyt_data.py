@@ -39,7 +39,10 @@ def get_nyt_article(url):
     """
     if url == "" or len(url) == 0:
         return None
-    r = requests.get(url, allow_redirects=True)
+    try:
+        r = requests.get(url, allow_redirects=True)
+    except:
+        return None
     if r.status_code >= 500:
         print("Server error! Status code:", r.status_code, "Returning...")
         return None
