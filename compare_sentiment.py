@@ -6,6 +6,24 @@ import pickle
 import requests
 import lexicon 
 
+# Function to actually calculate sentiment based on list of pos/neg words.
+def get_rule_sentiment(words):
+    """
+    Given a list of strings (words), return number of (pos - neg) words.
+    """
+
+    # Retrieve positive/negative words
+    with open('./lexicon/positive_words.txt', 'rb') as fp:
+        pos_words = pickle.load(fp)
+    with open('./lexicon/negative_words.txt', 'rb') as fp:
+        neg_words = pickle.load(fp)
+
+    # Get number of pos/neg words
+    pos = len([c for c in words if c.lower() in pos_words])
+    neg = len([c for c in words if c.lower() in neg_words])
+
+    return (pos - neg)
+
 # Functions to grab data:
 def get_nltk_sentiment(words):
     """
@@ -22,7 +40,8 @@ def get_sentiments(data):
     The returned value should be of a dataframe of columns:
         date, liststring (all the words), delta(change in stock), rule_score, nltk_compund
     """
-    data['rule_score'] = data['liststring'].map(lambda x : lexicon.get_rule_sentiment(x.lower().split(',')))
+#     data['rule_score'] = data['liststring'].map(lambda x : lexicon.get_rule_sentiment(x.lower().split(',')))
+    data['rule_score'] = data['liststring'].map(lambda x : get_rule_sentiment(x.lower().split(',')))
     data['nltk_compound'] = data['liststring'].map(lambda x : get_nltk_sentiment(x.replace(',', ' ')))
     return data
 
