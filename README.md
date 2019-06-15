@@ -45,7 +45,7 @@ We tried to use the following techniques to generate some sentiment score for ea
 
 [NLTK](http://www.nltk.org/) is free open-source tool which "provides a practical introduction to programming for language processing". One of its nice features is a module for sentiment analysis. In particular, they have a tool called their VADER (Valence Aware Dictionary for sEntiment Reasoning) SentimentIntensityAnalyzer, which takes in a piece of text, and spits out its own sentiment score, composed of four scores: negative, neutral, positive, and composite (a compound of the previous three). The only issue for our project, however, is that this lexicon-based sentiment analyzer is based on sentiment data derived from humans rating short pieces of texts through Amazon Mechanical Turk. As a result, it appears to be more ["focused on social media and short texts unlike Financial News which are almost the opposite"](https://towardsdatascience.com/https-towardsdatascience-com-algorithmic-trading-using-sentiment-analysis-on-news-articles-83db77966704).
 
-#### Building our own lexicon
+#### Textblob
 
 
 [Textblob](https://textblob.readthedocs.io/en/dev/quickstart.html) is another simple interface which performs sentiment analysis, providing both a polarity (-1 to 1) and a subjectivity score (0 to 1). Behind the scenes, Textblob holds a lexicon in XML format, containing entries on thousands upon thousands of words. It works by averaging the polarity scores among all words of the text being analyzed, and accounts for negation and modifier words too. All in all, Textblob doesn't appear to be too sophisticated a tool, and you can see the results below to see for yourself how it performed.
@@ -57,12 +57,15 @@ We simply combined words from each of these sources, and selected the first 2500
 
 #### Neural Network
 
-#### Google Cloud Platform Vision API
+#### Google Cloud Platform
+
+
 
 ## Results
 
 ## Considerations
-<!-- Causation vs Correlation -->
+
+Causation vs Correlation?
 
 Not all of the articles retrieved actually relate to the company queried.
 
