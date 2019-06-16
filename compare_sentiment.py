@@ -236,10 +236,6 @@ def plot_data(data, normFunc, start, end, techniques):
     x_scale = pd.DataFrame(scale.fit_transform(X.values))
     x_scale.rename(columns = get_technique_ordering(techniques), inplace=True)
     
-#     #Drop nltk
-#     if (not nltk):
-#         x_scale.drop(columns = 'nltk', inplace = True)
-    
     #Set time index back
     x_scale['date'] = X.index
     x_scale.set_index('date', inplace = True)

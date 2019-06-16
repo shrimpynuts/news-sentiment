@@ -70,18 +70,40 @@ Also, to simplify the complexity of the problem for our initial model, we set a 
 
 #### Google Cloud Platform
 
+We also wanted to see if previously engineered solutions from the likes of Google would fair well for this task. We were able to interface with GCP just fine using their provided Python SDK's, however, it simply was not feasible to perform sentiment scoring for thousands of articles at a time. Each article required an API call, and the latency was simply too much to handle at this scale. It's too bad that what is probably a sophisticated tool becomes unwieldly due to network and free-tier account constraints.
+
+<img src="./img/gcp.png"  height="100%" width= "100%" />
+
+Above is a screenshot of our dashboard when running the GCP Natural Language API for a single company (across about 3 months, which comes to about 2000 articles). We only got to 130 requests until one of them failed due to a server-side timeout issue. Clearly, this was unfeasible to do.
 
 ## Results
 
+Below are some of the results from the various techniques we tried, displaying "rule" - the rule-based algorithm based on our own lexicon, "nltk" - the sentiment analysis module from NLTK, "textblob" - TextBlob's tool, and finally "stock" - the change in the stock price of that company each day.
+
+We've taken screenshots of the graphs for Amazon, Microsoft, Facebook and Tesla. These graphs span about a month or two's worth of data.
+
+<img src="./img/amazon-graph.png" height="100%" width= "100%" /> 
+<img src="./img/micro-graph.png"  height="100%" width= "100%" />
+<img src="./img/fb-graph.png" height="100%" width= "100%" /> 
+<img src="./img/tesla-graph.png"  height="100%" width= "100%" />
+
+As you can see, our results are pretty varied. We selected rather good sections of data, but qualitatively, some areas appeared to correlate with the "label", the stock prices, far worse. 
+
+HERE ARE SOME QUANTITATIVE RESULTS (METRICS, STATISTICAL TESTS) ?????????
+
 ## Considerations
+
+### Assumptions
 
 We started this project with a huge assumption: there is a strong correlation between news sentiment (or sentiment from text online) and stock prices. Judging from the huge errors that some of our techniques yield, obviously, we've yet to prove that our assumption is entirely correct. However, it cannot be ignored that there are certainly incidences where huge spikes or drops happen at the same time for both our techniques' predictions and the actual stock prices. 
 
-Talk about incidences where the hug spikes/drops misalign by a little bit.
-
-
-Causation vs Correlation?
-
-Not all of the articles retrieved actually relate to the company queried.
+### Causation vs Correlation
 
 Discussion thus far has been about correlation, but can we also infer something about the causative relationship between news articles and company stock?
+We were interested in observing the behavior of the graphs at high/low spikes, particularly in which lines lead first, and which lines lagged behind. 
+Such behavior is indicative of causation, rather than correlation. 
+Qualitatively, our results came to no real conclusion about causation, but ?????????
+
+### Concerns
+
+Admittedly, after manually looking at many of the articles that form the basis of our results, many of them appear to have nothing to do with the query that we gave the New York Times API.

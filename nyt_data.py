@@ -9,6 +9,7 @@ import numpy as np
 import os
 from multiprocessing import Pool
 
+
 # Functions to get time-series data for news articles using NYT's API for a 
 # given query.
 
@@ -42,6 +43,7 @@ def get_nyt_article(url):
     try:
         r = requests.get(url, allow_redirects=True)
     except:
+        print("Request failed, exiting with none")
         return None
     if r.status_code >= 500:
         print("Server error! Status code:", r.status_code, "Returning...")
