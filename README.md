@@ -72,7 +72,7 @@ Also, to simplify the complexity of the problem for our initial model, we set a 
 
 We also wanted to see if previously engineered solutions from the likes of Google would fair well for this task. We were able to interface with GCP just fine using their provided Python SDK's, however, it simply was not feasible to perform sentiment scoring for thousands of articles at a time. Each article required an API call, and the latency was simply too much to handle at this scale. It's too bad that what is probably a sophisticated tool becomes unwieldly due to network and free-tier account constraints.
 
-<img src="./img/gcp.png"  height="100%" width= "100%" />
+<img src="./img/gcp-pic.png"  height="70%" width= "70%" />
 
 Above is a screenshot of our dashboard when running the GCP Natural Language API for a single company (across about 3 months, which comes to about 2000 articles). We only got to 130 requests until one of them failed due to a server-side timeout issue. Clearly, this was unfeasible to do.
 
@@ -82,10 +82,10 @@ Below are some of the results from the various techniques we tried, displaying "
 
 We've taken screenshots of the graphs for Amazon, Microsoft, Facebook and Tesla. These graphs span about a month or two's worth of data.
 
-<img src="./img/amazon-graph.png" height="100%" width= "100%" /> 
-<img src="./img/micro-graph.png"  height="100%" width= "100%" />
-<img src="./img/fb-graph.png" height="100%" width= "100%" /> 
-<img src="./img/tesla-graph.png"  height="100%" width= "100%" />
+<img src="./img/amazon-graph.png" height="70%" width= "70%" /> 
+<img src="./img/micro-graph.png"  height="70%" width= "70%" />
+<img src="./img/fb-graph.png" height="70%" width= "70%" /> 
+<img src="./img/tesla-graph.png"  height="70%" width= "70%" />
 
 As you can see, our results are pretty varied. We selected rather good sections of data, but qualitatively, some areas appeared to correlate with the "label", the stock prices, far worse. 
 
