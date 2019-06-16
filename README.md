@@ -72,7 +72,7 @@ Also, to simplify the complexity of the problem for our initial model, we set a 
 
 We also wanted to see if previously engineered solutions from the likes of Google would fair well for this task. We were able to interface with GCP just fine using their provided Python SDK's, however, it simply was not feasible to perform sentiment scoring for thousands of articles at a time. Each article required an API call, and the latency was simply too much to handle at this scale. It's too bad that what is probably a sophisticated tool becomes unwieldly due to network and free-tier account constraints.
 
-<img src="./img/gcp-pic.png"  height="70%" width= "70%" />
+<img src="img/gcp-pic.png"  height="70%" width= "70%" />
 
 Above is a screenshot of our dashboard when running the GCP Natural Language API for a single company (across about 3 months, which comes to about 2000 articles). We only got to 130 requests until one of them failed due to a server-side timeout issue. Clearly, this was unfeasible to do.
 
