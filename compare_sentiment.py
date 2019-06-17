@@ -13,10 +13,13 @@ from google.cloud.language import types
 from google.oauth2 import service_account
 
 # Establish GCP credentials
+# USE OF OUR GCP CODE REQUIRES A CREDENTIALS JSON FILE FROM GOOGLE NAMED 
+# gcp-cred.json UNDER THE OUTTERMOST DIRECTORY
 credentials = service_account.Credentials.from_service_account_file(
     './gcp-cred.json')
 # Instantiates a GCP client
 client = language.LanguageServiceClient(credentials=credentials)
+
 
 def get_gcp_sentiment(words):
     """
@@ -48,6 +51,7 @@ def get_rule_sentiment(words):
 
     return (pos - neg)
 
+
 # Functions to grab data:
 def get_nltk_sentiment(words):
     """
@@ -71,7 +75,7 @@ def get_technique_ordering(techniques):
     Gets correct ordering for columns in techniques ("nltk", "rule", "net", "gcp", "textblob").
     Stock will always come first, however.
     """
-    res = {0 : "stock"}
+    res = {0: "stock"}
     count = 1
     if "rule" in techniques:
         res[count] = "rule"
@@ -87,6 +91,7 @@ def get_technique_ordering(techniques):
         count += 1
     return res
 
+
 def get_sentiments(data, techniques):
     """
     data - output from collapse_articles
@@ -97,15 +102,16 @@ def get_sentiments(data, techniques):
         date, liststring (all the words), delta(change in stock), rule_score, nltk_compund
     """
     if "rule" in techniques:
-        data['rule'] = data['liststring'].map(lambda x : get_rule_sentiment(x.lower().split(',')))
+        data['rule'] = data['liststring'].map(lambda x: get_rule_sentiment(x.lower().split(',')))
     if "nltk" in techniques:
-        data['nltk'] = data['liststring'].map(lambda x : get_nltk_sentiment(x.replace(',', ' ')))
+        data['nltk'] = data['liststring'].map(lambda x: get_nltk_sentiment(x.replace(',', ' ')))
     if "textblob" in techniques:
-        data['textblob'] = data['liststring'].map(lambda x : get_textblob_sentiment(x.replace(',', ' ')))
+        data['textblob'] = data['liststring'].map(lambda x: get_textblob_sentiment(x.replace(',', ' ')))
     if "gcp" in techniques:
-        data['gcp'] = data['liststring'].map(lambda x : get_gcp_sentiment(x.replace(',', ' ')))
+        data['gcp'] = data['liststring'].map(lambda x: get_gcp_sentiment(x.replace(',', ' ')))
     
     return data
+
 
 def get_stock(stock_symbol, api_key):
     """
@@ -138,6 +144,7 @@ def get_stock(stock_symbol, api_key):
     st.drop(columns=['date'], inplace=True)
     return st
 
+
 # Function to concat all the data into a pandas DataFrame:
 def collapse_articles(data_source = "./data/apple_data.pkl", stockName = "GOOG", 
                       time_before = '2018-09-27', time_after = '2019-05-17'):
@@ -156,7 +163,7 @@ def collapse_articles(data_source = "./data/apple_data.pkl", stockName = "GOOG",
         raw = [article for article in raw if article is not None]
     #------------------ Prepare Initial DataFrame ---------------
     #Prepare DataFrame.
-    df = pd.DataFrame(raw, columns = ["link", "time", "words"])
+    df = pd.DataFrame(raw, columns=["link", "time", "words"])
     df['time'] = pd.to_datetime(df.time)
     df = df.sort_values('time').set_index('time')
     
@@ -209,9 +216,10 @@ def collapse_articles(data_source = "./data/apple_data.pkl", stockName = "GOOG",
     final_df = pd.merge(final_df, deltas, on = 'time', how = 'inner').drop(columns = 'dayofweek')
     
     #Handle errors
-    final_df = final_df[final_df['liststring']!=0] 
+    final_df = final_df[final_df['liststring'] != 0] 
 
     return final_df
+
 
 # Function to plot and compare the data.
 def plot_data(data, normFunc, start, end, techniques):
@@ -232,12 +240,12 @@ def plot_data(data, normFunc, start, end, techniques):
         
     data = data[start:end]
     
-    X = data.drop(columns = "liststring")    
+    X = data.drop(columns="liststring")    
     x_scale = pd.DataFrame(scale.fit_transform(X.values))
-    x_scale.rename(columns = get_technique_ordering(techniques), inplace=True)
+    x_scale.rename(columns=get_technique_ordering(techniques), inplace=True)
     
     #Set time index back
     x_scale['date'] = X.index
-    x_scale.set_index('date', inplace = True)
+    x_scale.set_index('date', inplace=True)
     
     return x_scale.plot(figsize=(10, 5))

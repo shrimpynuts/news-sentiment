@@ -98,12 +98,16 @@ HERE ARE SOME QUANTITATIVE RESULTS (METRICS, STATISTICAL TESTS) ?????????
 
 We started this project with a huge assumption: there is a strong correlation between news sentiment (or sentiment from text online) and stock prices. Judging from the huge errors that some of our techniques yield, obviously, we've yet to prove that our assumption is entirely correct. However, it cannot be ignored that there are certainly incidences where huge spikes or drops happen at the same time for both our techniques' predictions and the actual stock prices. 
 
-### Causation vs Correlation
+#### Causation or Correlation
 
-Discussion thus far has been about correlation, but can we also infer something about the causative relationship between news articles and company stock?
-We were interested in observing the behavior of the graphs at high/low spikes, particularly in which lines lead first, and which lines lagged behind. 
-Such behavior is indicative of causation, rather than correlation. 
-Qualitatively, our results came to no real conclusion about causation, but ?????????
+There are also some incindences where the timing of huge spikes/drop among news sentiment and stock prices actually are not synchronous but slightly misaligned. 
+Our discussion thus far has all been about correlation, but can these misalignments also suggest something about potential causative relationships? (Maybe very positive news articles today impact stock prices to rise the next few days, or perhaps very negative stock changes today influence the tone of news articles' to be bleaker than average). 
+
+Perhaps (most likely) there simply are no easy answers to the questions we're posing, or else everyone with some level of sentiment analysis skills can predict and beat the market. The initiative and ability to put these questions into context case by case or even think about these questions at all may be more meaningful than the answers themsevles. 
+
+#### How Can This Project Be Improved?
+
+ The Data Source - In any machine learning or NLP project, as complicated as the models can be, the core the project will lies in the strength and depth of the data. For this project, we've only explored one news source: The New York Times. If we expanded our data source to include other sources (Yahoo Finance, CNBA, Bloomberg...), our lexicon and NN can become more sophisticated and perhaps we can have better predictions. 
 
 ### Concerns
 
