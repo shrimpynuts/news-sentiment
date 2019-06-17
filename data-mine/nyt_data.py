@@ -12,7 +12,6 @@ from multiprocessing import Pool
 
 # Functions to get time-series data for news articles using NYT's API for a 
 # given query.
-
 api_keys = [
     # These are Will's keys (each has 10 req/min)
     ["exsr5Zr1e6ads9vR36KJxheARS9zfGyi",

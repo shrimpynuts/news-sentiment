@@ -110,7 +110,7 @@ Perhaps (most likely) there simply are no easy answers to the questions we're po
 
 #### How Can This Project Be Improved?
 
- The Data Source - In any machine learning or NLP project, as complicated as the models can be, the core the project will lies in the strength and depth of the data. For this project, we've only explored one news source: The New York Times. If we expanded our data source to include other sources (Yahoo Finance, CNBA, Bloomberg...), our lexicon and NN can become more sophisticated and perhaps we can have better predictions. 
+ The data source - In any machine learning or NLP project, as complicated as the models can be, the core the project will lies in the strength and depth of the data. For this project, we've only explored one news source: The New York Times. If we expanded our data source to include other sources (Yahoo Finance, CNBA, Bloomberg...), our lexicon and NN can become more sophisticated and perhaps we can have better predictions. 
 
 ### Concerns
 

@@ -4,7 +4,6 @@ import matplotlib.pyplot as plt
 import pandas as pd
 import pickle
 import requests
-import lexicon 
 from textblob import TextBlob
 
 from google.cloud import language
