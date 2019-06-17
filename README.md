@@ -61,7 +61,9 @@ Because there are so many words and variability from article to article, the mor
 
 However, simply aggregating all the text isn't enough. To fit the inputs of a neural network (which should be numeric), we had to re-transform our data even more. To do so, we used TensorFlow's built-in Tokenizer() function which translates text into sequences of integers or so-called word vectors. These word vectors then become the Input/Embedding Layer of our network. As inspired by this [Movie Review Sentiment Analysis Probelm](https://towardsdatascience.com/machine-learning-word-embedding-sentiment-classification-using-keras-b83c28087456), the architecture of our model looks something like this: 
 
-<img src="./img/network_arch.png"  height="100%" width= "100%" />
+<p>
+    <img src="./img/network_arch.png"  height="100%" width= "100%" />
+</p>
 
 In our initial tries of building the model, we discovered that the model was overfitting to our training data very quickly and predicting our test data with terrible accuracy. We suspect that a potential reason for this is that there are simply too many features (words) that the model has to learn from. Therefore, after almost every neural layer, we also used a Dropout Layer to prevent this. We also played around with how we built our word vectors to reduce dimensionalitiy in our input data.
 
