@@ -70,6 +70,13 @@ In our initial tries of building the model, we discovered that the model was ove
 
 Also, to simplify the complexity of the problem for our initial model, we set a "baby" step: instead of directly predicting the sentiment (stock prices), all we need is to predict whether the stock increases or decreases. Once we believe our model performs relatively well on this binary-classification problem, we then tried to build a more sophisticated regression model to try to predict the actual prices.
 
+<p>
+    <img src="./img/acc_plot/model1_binary_1.png"  height="100%" width= "100%" />
+</p>
+<p>
+    <img src="./img/acc_plot/model2_binary_1.png"  height="100%" width= "100%" />
+</p>
+
 #### Google Cloud Platform
 
 We also wanted to see if previously engineered solutions from the likes of Google would fair well for this task. We were able to interface with GCP just fine using their provided Python SDK's, however, it simply was not feasible to perform sentiment scoring for thousands of articles at a time. Each article required an API call, and the latency was simply too much to handle at this scale. It's too bad that what is probably a sophisticated tool becomes unwieldly due to network and free-tier account constraints.
