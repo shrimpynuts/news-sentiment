@@ -70,11 +70,15 @@ In our initial tries of building the model, we discovered that the model was ove
 
 Also, to simplify the complexity of the problem for our initial model, we set a "baby" step: instead of directly predicting the sentiment (stock prices), all we need is to predict whether the stock increases or decreases. Once we believe our model performs relatively well on this binary-classification problem, we then tried to build a more sophisticated regression model to try to predict the actual prices.
 
-<p>
-    <img src="./img/acc_plot/model1_binary_1.png"  height="100%" width= "100%" />
+Binary Classification
+
+<p> 
+    Model Architecture 1
+    <img src="./img/acc_plot/model1_binary_1.png"  height="50%" width= "50%" />
 </p>
 <p>
-    <img src="./img/acc_plot/model2_binary_1.png"  height="100%" width= "100%" />
+    Model Architecture 2
+    <img src="./img/acc_plot/model2_binary_1.png"  height="50%" width= "50%" />
 </p>
 
 #### Google Cloud Platform
