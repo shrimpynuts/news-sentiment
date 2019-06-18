@@ -86,13 +86,15 @@ Clearly, this was unfeasible to do.
 Below are some of the results from the various techniques we tried, displaying "rule" - the rule-based algorithm based on our own lexicon, "nltk" - the sentiment analysis module from NLTK, "textblob" - TextBlob's tool, and finally "stock" - the change in the stock price of that company each day.
 
 We've taken screenshots of the graphs for Amazon, Microsoft, Facebook and Tesla. These graphs span about a month or two's worth of data.
-
-<img src="./img/micro-graph.png"  height="70%" width= "70%" />
-
-<img src="./img/fb-graph.png" height="70%" width= "70%" /> 
-
-<img src="./img/tesla-graph.png"  height="70%" width= "70%" />
-
+<p>
+    <img src="./img/micro-graph.png"  height="70%" width= "70%" />
+</p>    
+<p>
+    <img src="./img/fb-graph.png" height="70%" width= "70%" /> 
+</p>
+<p>
+    <img src="./img/tesla-graph.png"  height="70%" width= "70%" />
+</p>
 As you can see, our results are pretty varied. We selected rather good sections of data, but qualitatively, some areas appeared to correlate with the "label", the stock prices, far worse. 
 
 HERE ARE SOME QUANTITATIVE RESULTS (METRICS, STATISTICAL TESTS) ?????????
