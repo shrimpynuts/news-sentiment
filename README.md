@@ -4,6 +4,7 @@ Jonathan Cai, William Su
 <img src="./img/google-annotated.png" height="100%" width= "100%" /> 
 <img src="./img/apple-annotated.png"  height="100%" width= "100%" />
 <img src="./img/amazon-annotated.png" height="100%" width= "100%" /> 
+
 ## Motivation
 
 We've always been somewhat interested in both the financial world and new natural language processing technologies. Thinking about how we could explore the intersection between these two, we read many interesting articles and research reports online about people using Twitter data to predict stock pricing, most notably [Dr. Bollen's popular research paper](https://arxiv.org/pdf/1010.3003.pdf), and people doing similar things with sentiment analysis (
