@@ -88,7 +88,9 @@ Below are some of the results from the various techniques we tried, displaying "
 We've taken screenshots of the graphs for Amazon, Microsoft, Facebook and Tesla. These graphs span about a month or two's worth of data.
 
 <img src="./img/micro-graph.png"  height="70%" width= "70%" />
+
 <img src="./img/fb-graph.png" height="70%" width= "70%" /> 
+
 <img src="./img/tesla-graph.png"  height="70%" width= "70%" />
 
 As you can see, our results are pretty varied. We selected rather good sections of data, but qualitatively, some areas appeared to correlate with the "label", the stock prices, far worse. 
