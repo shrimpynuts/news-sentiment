@@ -76,10 +76,11 @@ Binary Classification
     <img src="./img/acc_plot/model_binary.png"  height="100%" width= "100%" />
 </p>
 
-As you can see, our two architectures' results actually differ by quite a bit. Model 1 only has one layer. In this case, the training accuracy gradually grows, but the testing accuracy gradually decreases. This is a good example that the model is too naive and doesn't work well with new data. 
+As you can see, our two architectures' results actually differ by quite a bit. Model 1 only has one layer. In this case, the training accuracy gradually grows, but the testing accuracy gradually decreases. This is a good example that the model is too naive. 
 
 Model 2 is a bit more sophisticated with 3 layers. While the testing accuracy in general is better than model 1's, the training accuracy in model 2 too quickly converge to 1. This is a good example that the model has overfitted on the training data. Although we mentioned that we tried to combat this with dropout layers, the overfitted results are still not ideal. 
 
+For the regression part, we used the same model architectures but without an activation function in the last output layer. The model did very poorly as there are just too many features inputted.
 
 #### Google Cloud Platform
 
@@ -128,7 +129,7 @@ Above is a correlation heatmap, constructed using seaborn, exploring the correla
 
 ## Considerations
 
-### Assumptions
+#### Assumptions
 
 We started this project with a huge assumption: there is a strong correlation between news sentiment (or sentiment from text online) and stock prices. Judging from the huge errors that some of our techniques yield, obviously, we've yet to prove that our assumption is entirely correct. However, it cannot be ignored that there are certainly incidences where huge spikes or drops happen at the same time for both our techniques' predictions and the actual stock prices. 
 
