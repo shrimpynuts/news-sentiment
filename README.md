@@ -93,7 +93,13 @@ We've taken screenshots of the graphs for Amazon, Microsoft, Facebook and Tesla.
 
 As you can see, our results are pretty varied. We selected rather good sections of data, but qualitatively, some areas appeared to correlate with the "label", the stock prices, far worse. 
 
-HERE ARE SOME QUANTITATIVE RESULTS (METRICS, STATISTICAL TESTS) ?????????
+Here are our quantitative results (MSE and MAE) for the company Google:
+
+<img src="./img/metrics.png"  height="50%" width= "50%" />
+
+For our control group, we simply shifted back the delta labels a single day. Effectively, they are the results you would achieve if you simply guessed on at any day, that the next day's stock price would be the same as the price as it is today.
+
+As you can see our "rule" based algorithm performs slightly better than the control group, but nltk and textblob performed slightly worse.
 
 ## Considerations
 

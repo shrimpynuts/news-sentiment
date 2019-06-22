@@ -71,7 +71,7 @@ def get_textblob_sentiment(words):
 
 def get_technique_ordering(techniques):
     """
-    Gets correct ordering for columns in techniques ("nltk", "rule", "net", "gcp", "textblob").
+    Gets correct ordering for columns in techniques ("nltk", "rule", "net", "gcp", "textblob", "control").
     Stock will always come first, however.
     """
     res = {0: "stock"}
@@ -88,13 +88,16 @@ def get_technique_ordering(techniques):
     if "gcp" in techniques:
         res[count] = "gcp"
         count += 1
+    if "control" in techniques:
+        res[count] = "control"
+        count += 1
     return res
 
 
 def get_sentiments(data, techniques):
     """
     data - output from collapse_articles
-    techinques - list of strings. Each string must be one of: ("nltk", "rule", "net", "gcp", "textblob")
+    techinques - list of strings. Each string must be one of: ("nltk", "rule", "net", "gcp", "textblob", "control")
     
     Function that gets score for text using both our own rule based bag-of-words and NLTK's model.
     The returned value should be of a dataframe of columns:
@@ -108,6 +111,11 @@ def get_sentiments(data, techniques):
         data['textblob'] = data['liststring'].map(lambda x: get_textblob_sentiment(x.replace(',', ' ')))
     if "gcp" in techniques:
         data['gcp'] = data['liststring'].map(lambda x: get_gcp_sentiment(x.replace(',', ' ')))
+    if "control" in techniques:
+        forecast_out = 1
+        forecast_column = 'delta'
+        data['control'] = data[forecast_column].shift(-forecast_out)
+        data.drop(data.tail(forecast_out).index,inplace=True)
     
     return data
 
