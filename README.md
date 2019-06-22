@@ -110,7 +110,9 @@ As you can see qualitatively, our results are pretty varied. We selected rather 
 
 Here are our quantitative results (MSE and MAE) for the company Google:
 
+<p> 
 <img src="./img/metrics.png"  height="50%" width= "50%" />
+</p>
 
 For our control group, we simply shifted back the delta labels a single day. Effectively, they are the results you would achieve if you simply guessed on at any day, that the next day's stock price would be the same as the price as it is today. 
 
