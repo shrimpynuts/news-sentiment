@@ -73,13 +73,9 @@ Also, to simplify the complexity of the problem for our initial model, we set a 
 Binary Classification
 
 <p> 
-    Model Architecture 1
-    <img src="./img/acc_plot/model1_binary_1.png"  height="50%" width= "50%" />
+    <img src="./img/acc_plot/model_binary.png"  height="100%" width= "100%" />
 </p>
-<p>
-    Model Architecture 2
-    <img src="./img/acc_plot/model2_binary_1.png"  height="50%" width= "50%" />
-</p>
+
 
 #### Google Cloud Platform
 
@@ -107,8 +103,6 @@ We've taken screenshots of the graphs for Amazon, Microsoft, Facebook and Tesla.
     <img src="./img/tesla-graph.png"  height="70%" width= "70%" />
 </p>
 As you can see, our results are pretty varied. We selected rather good sections of data, but qualitatively, some areas appeared to correlate with the "label", the stock prices, far worse. 
-
-HERE ARE SOME QUANTITATIVE RESULTS (METRICS, STATISTICAL TESTS) ?????????
 
 ## Considerations
 
