@@ -1,8 +1,9 @@
 # Predicting Stock Through News Articles 
 Jonathan Cai, William Su
 
-<img src="./img/google1.png" height="100%" width= "100%" /> 
-<img src="./img/apple1.png"  height="100%" width= "100%" />
+<img src="./img/google-annotated.png" height="100%" width= "100%" /> 
+<img src="./img/apple-annotated.png"  height="100%" width= "100%" />
+<img src="./img/amazon-annotated.png" height="100%" width= "100%" /> 
 
 ## Motivation
 
@@ -69,6 +70,17 @@ In our initial tries of building the model, we discovered that the model was ove
 
 Also, to simplify the complexity of the problem for our initial model, we set a "baby" step: instead of directly predicting the sentiment (stock prices), all we need is to predict whether the stock increases or decreases. Once we believe our model performs relatively well on this binary-classification problem, we then tried to build a more sophisticated regression model to try to predict the actual prices.
 
+Binary Classification
+
+<p> 
+    <img src="./img/acc_plot/model_binary.png"  height="100%" width= "100%" />
+</p>
+
+As you can see, our two architectures' results actually differ by quite a bit. Model 1 only has one layer. In this case, the training accuracy gradually grows, but the testing accuracy gradually decreases. This is a good example that the model is too naive and doesn't work well with new data. 
+
+Model 2 is a bit more sophisticated with 3 layers. While the testing accuracy in general is better than model 1's, the training accuracy in model 2 too quickly converge to 1. This is a good example that the model has overfitted on the training data. Although we mentioned that we tried to combat this with dropout layers, the overfitted results are still not ideal. 
+
+
 #### Google Cloud Platform
 
 We also wanted to see if previously engineered solutions from the likes of Google would fair well for this task. We were able to interface with GCP just fine using their provided Python SDK's, however, it simply was not feasible to perform sentiment scoring for thousands of articles at a time. Each article required an API call, and the latency was simply too much to handle at this scale. It's too bad that what is probably a sophisticated tool becomes unwieldly due to network and free-tier account constraints.
@@ -85,19 +97,24 @@ Clearly, this was unfeasible to do.
 Below are some of the results from the various techniques we tried, displaying "rule" - the rule-based algorithm based on our own lexicon, "nltk" - the sentiment analysis module from NLTK, "textblob" - TextBlob's tool, and finally "stock" - the change in the stock price of that company each day.
 
 We've taken screenshots of the graphs for Amazon, Microsoft, Facebook and Tesla. These graphs span about a month or two's worth of data.
-
-<img src="./img/amazon-graph.png" height="70%" width= "70%" /> 
-<img src="./img/micro-graph.png"  height="70%" width= "70%" />
-<img src="./img/fb-graph.png" height="70%" width= "70%" /> 
-<img src="./img/tesla-graph.png"  height="70%" width= "70%" />
-
-As you can see, our results are pretty varied. We selected rather good sections of data, but qualitatively, some areas appeared to correlate with the "label", the stock prices, far worse. 
+<p>
+    <img src="./img/micro-graph.png"  height="70%" width= "70%" />
+</p>    
+<p>
+    <img src="./img/fb-graph.png" height="70%" width= "70%" /> 
+</p>
+<p>
+    <img src="./img/tesla-graph.png"  height="70%" width= "70%" />
+</p>
+As you can see qualitatively, our results are pretty varied. We selected rather good sections of data, but some areas appeared to correlate with the "label", the stock prices, far worse. 
 
 Here are our quantitative results (MSE and MAE) for the company Google:
 
 <img src="./img/metrics.png"  height="50%" width= "50%" />
 
-For our control group, we simply shifted back the delta labels a single day. Effectively, they are the results you would achieve if you simply guessed on at any day, that the next day's stock price would be the same as the price as it is today.
+For our control group, we simply shifted back the delta labels a single day. Effectively, they are the results you would achieve if you simply guessed on at any day, that the next day's stock price would be the same as the price as it is today. 
+
+Admittedly, this is not necessarily a great control group, as we could potentially employ some sort of simple moving average algorithm to give a better baseline of comparison, but we are sticking with this for now.
 
 As you can see our "rule" based algorithm performs slightly better than the control group, but nltk and textblob performed slightly worse.
 
@@ -125,4 +142,4 @@ Admittedly, after manually looking at many of the articles that form the basis o
 
 ----------------
 
-In the off chance that you would like to run our code and see how to use it, see the "explore_data" Jupyter Notebook file.
+In the off chance that you would like to run our code and see how to use it, clone our repo, install the dependencies listed in requirements.txt, and take a look at the "explore_data" Jupyter Notebook file.

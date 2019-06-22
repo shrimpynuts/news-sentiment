@@ -6,30 +6,30 @@ import pickle
 import requests
 from textblob import TextBlob
 
-from google.cloud import language
-from google.cloud.language import enums
-from google.cloud.language import types
-from google.oauth2 import service_account
+# from google.cloud import language
+# from google.cloud.language import enums
+# from google.cloud.language import types
+# from google.oauth2 import service_account
 
 # Establish GCP credentials
 # USE OF OUR GCP CODE REQUIRES A CREDENTIALS JSON FILE FROM GOOGLE NAMED 
 # gcp-cred.json UNDER THE OUTTERMOST DIRECTORY
-credentials = service_account.Credentials.from_service_account_file(
-    './gcp-cred.json')
-# Instantiates a GCP client
-client = language.LanguageServiceClient(credentials=credentials)
+# credentials = service_account.Credentials.from_service_account_file(
+#     './gcp-cred.json')
+# # Instantiates a GCP client
+# client = language.LanguageServiceClient(credentials=credentials)
 
 
-def get_gcp_sentiment(words):
-    """
-    Words is a single string of words.
-    """
-    document = types.Document(
-        content=words,
-        type=enums.Document.Type.PLAIN_TEXT)
-    # Detects the sentiment of the text
-    sentiment = client.analyze_sentiment(document=document).document_sentiment
-    return sentiment.score
+# def get_gcp_sentiment(words):
+#     """
+#     Words is a single string of words.
+#     """
+#     document = types.Document(
+#         content=words,
+#         type=enums.Document.Type.PLAIN_TEXT)
+#     # Detects the sentiment of the text
+#     sentiment = client.analyze_sentiment(document=document).document_sentiment
+#     return sentiment.score
 
 
 # Function to actually calculate sentiment based on list of pos/neg words.
@@ -115,7 +115,7 @@ def get_sentiments(data, techniques):
         forecast_out = 1
         forecast_column = 'delta'
         data['control'] = data[forecast_column].shift(-forecast_out)
-        data.drop(data.tail(forecast_out).index,inplace=True)
+        data.drop(data.tail(forecast_out).index, inplace=True)
     
     return data
 
