@@ -111,7 +111,7 @@ As you can see qualitatively, our results are pretty varied. We selected rather 
 Here are our quantitative results (MSE and MAE) for the company Google:
 
 <p> 
-<img src="./img/metrics.png"  height="50%" width= "50%" />
+    <img src="./img/metrics.png"  height="50%" width= "50%" />
 </p>
 
 For our control group, we simply shifted back the delta labels a single day. Effectively, they are the results you would achieve if you simply guessed on at any day, that the next day's stock price would be the same as the price as it is today. 
@@ -119,6 +119,12 @@ For our control group, we simply shifted back the delta labels a single day. Eff
 Admittedly, this is not necessarily a great control group, as we could potentially employ some sort of simple moving average algorithm to give a better baseline of comparison, but we are sticking with this for now.
 
 As you can see our "rule" based algorithm performs slightly better than the control group, but nltk and textblob performed slightly worse.
+
+<p> 
+    <img src="./img/heatmap.png"  height="50%" width= "50%" />
+</p>
+
+Above is a correlation heatmap, constructed using seaborn, exploring the correlation between all of the used techniques and each other. This graph somewhat confirms some of the insights gained from our MSE and MAE results, suggesting that our "rule" based algorithm performs best in correlation with the stock price change. Also, it indicates that nltk, rule and textblob have relatively high correlation with each other. This is a good sign, as the different types of analysis on the news articles have similar results to each other.
 
 ## Considerations
 
