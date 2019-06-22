@@ -76,6 +76,10 @@ Binary Classification
     <img src="./img/acc_plot/model_binary.png"  height="100%" width= "100%" />
 </p>
 
+As you can see, our two architectures' results actually differ by quite a bit. Model 1 only has one layer. In this case, the training accuracy gradually grows, but the testing accuracy gradually decreases. This is a good example that the model is too naive and doesn't work well with new data. 
+
+Model 2 is a bit more sophisticated with 3 layers. While the testing accuracy in general is better than model 1's, the training accuracy in model 2 too quickly converge to 1. This is a good example that the model has overfitted on the training data. Although we mentioned that we tried to combat this with dropout layers, the overfitted results are still not ideal. 
+
 
 #### Google Cloud Platform
 
