@@ -127,6 +127,8 @@ As you can see our "rule" based algorithm performs slightly better than the cont
 
 Above is a correlation heatmap, constructed using seaborn, exploring the correlation between all of the used techniques and each other. This graph somewhat confirms some of the insights gained from our MSE and MAE results, suggesting that our "rule" based algorithm performs best in correlation with the stock price change. Also, it indicates that nltk, rule and textblob have relatively high correlation with each other. This is a good sign, as the different types of analysis on the news articles have similar results to each other.
 
+NOTE: Admittedly, this report is lacking in a very important part of this "research" project - the quantitative results/analysis in the form of statistical metrics and significance testing. More to come, hopefully...
+
 ## Considerations
 
 #### Assumptions
